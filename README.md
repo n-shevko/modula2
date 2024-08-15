@@ -1,4 +1,4 @@
-Tiny subset of Modula 2 implementation to learn basics of compiler engineering.
+Tiny subset of Modula 2 is implemented to learn basics of compiler engineering.
 
 LLVM IR was used as a target language.
 
