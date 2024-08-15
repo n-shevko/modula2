@@ -3,7 +3,7 @@ LLVM IR was used as a target language.
 
 ### What was done
 
-1. Implemented [peg packrat parser generator](https://en.wikipedia.org/wiki/Packrat_parser)
+1. [Peg packrat parser generator](https://en.wikipedia.org/wiki/Packrat_parser)
    It consumes file like [this](https://github.com/n-shevko/modula2/blob/main/modula_2/grammar.txt)
    and generates:
    - ast type definitions like [these](https://github.com/n-shevko/modula2/blob/main/modula_2/RawAst.fs)
