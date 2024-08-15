@@ -1,0 +1,58 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <RootNamespace>modula_2</RootNamespace>
+        <OtherFlags>--strict-indentation-</OtherFlags>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DebugType>full</DebugType>
+      <DefineConstants>DEBUG;TRACE</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DebugType>pdbonly</DebugType>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <Compile Include="parser\Utils.fs" />
+        <Compile Include="parser\AstGenerator.fs" />
+        <Compile Include="parser\ReportSyntaxErrors.fs" />
+        <Compile Include="parser\RawAst.fs" />
+        <Compile Include="parser\Ast.fs" />
+        <Compile Include="parser\SimplifyAst.fs" />
+        <Compile Include="parser\AstToSyntax.fs" />
+        <Compile Include="parser\ExpandQuantifiers.fs" />
+        <Compile Include="parser\EliminateLeftRecursion.fs" />
+        <Compile Include="parser\SemanticAnalysis.fs" />
+        <Compile Include="parser\Parser.fs" />
+        <Compile Include="parser\Grammar.fs" />
+        <Compile Include="parser\ParserGenerator.fs" />
+
+        <Compile Include="modula_2\RawAst.fs" />
+        <Compile Include="modula_2\Ast.fs" />
+        <Compile Include="modula_2\SimplifyAst.fs" />
+        <Compile Include="modula_2\Parser.fs" />
+        
+        <Compile Include="modula_2\SemanticAnalysis.fs" />
+        <Compile Include="modula_2\Cfg.fs" />
+        <Compile Include="modula_2\Ssa.fs" />
+        
+        <Compile Include="modula_2\LlvmIr.fs" />
+        
+        <Compile Include="modula_2\Main.fs" />
+
+        <Content Include="modula_2\grammar.txt" />
+        <Content Include="modula_2\expanded_grammar.txt" />
+        <Content Include="modula_2\gcd.txt" />
+        <Content Include="modula_2\ssa_tests.txt" />
+        <ClCompile Include="modula_2\callgcd.c" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="LLVMSharp" Version="18.1.0-rc1" />
+    </ItemGroup>
+
+</Project>

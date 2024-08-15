@@ -1,0 +1,88 @@
+letter = 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i' | 'j' | 'k' | 'l' | 'm' | 'n' | 'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' | 'v' | 'w' | 'x' | 'y' | 'z' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z';
+
+digit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
+
+number = digit+;
+
+symbol = letter | digit | '_';
+
+identifier = symbol+;
+
+delimeter = '\n' | ' ';
+
+ident_list = identifier delimeter* (delimeter* ',' delimeter* identifier){identifiers_tail}*;
+
+qualident = identifier ('.' identifier){qualidents_tail}*;
+
+import = ('from' delimeter+ identifier delimeter+){from_optional}? 'import' delimeter+ ident_list;
+
+operation = '*' | '/' | '+' | '-' | 'div' | 'mod' | 'or' | 'and' | '=' | '#' | '<' | '<=' | '>' | '>=';
+
+expr =
+  expr delimeter* operation delimeter* expr
+| '(' delimeter* expr delimeter* ')'
+| 'not' delimeter* expr
+| fn_call
+| number
+| var_or_array_elem
+| '[' delimeter* exp_list delimeter* ']';
+
+exp_list = expr (delimeter* ',' delimeter* expr){exprs_tail}*;
+
+fn_call = qualident '(' delimeter* exp_list? delimeter* ')';
+
+constant_declaration = identifier delimeter* '=' delimeter* expr;
+
+variable_declaration = ident_list delimeter* ':' delimeter* qualident;
+
+formal_parameter = 'var'{optional_var}? delimeter* ident_list delimeter* ':' delimeter* qualident;
+
+formal_parameter_list = formal_parameter (delimeter* ';' delimeter* formal_parameter){formal_parameters_tail}*;
+
+formal_parameters = '(' delimeter* formal_parameter_list? delimeter* ')' (delimeter* ':' delimeter* qualident){optional_return_type}?;
+
+type_def =
+  'array[' number ']' delimeter* 'of' delimeter+ identifier
+| 'record' variable_declarations delimeter+ 'end';
+
+declaration =
+  'const' (delimeter* constant_declaration delimeter* ';'){constant_declarations}*
+| 'var' (delimeter* variable_declaration delimeter* ';'){variable_declarations}*
+| procedure_declaration delimeter* ';'
+| 'type' delimeter+ (identifier delimeter* '=' delimeter* type_def delimeter* ';'){typedefs}*;
+
+var_or_array_elem =
+  identifier '[' expr ']'
+| qualident;
+
+statement =
+  var_or_array_elem delimeter* ':=' delimeter* expr
+| if_statement
+| while_statement
+| 'return' (delimeter* expr){optional_expr}?
+| fn_call;
+
+statement_sequence = (statement delimeter* ';' delimeter*){statements}+;
+
+if_statement = 'if' delimeter+ expr delimeter+ 'then' delimeter+
+  statement_sequence
+('else' delimeter+ statement_sequence){else_branch}?
+  delimeter*
+'end';
+
+while_statement = 'while' delimeter+ expr delimeter+ 'do'
+  delimeter+ statement_sequence
+'end';
+
+block = (declaration delimeter*){declarations}*
+        ('begin' delimeter+ statement_sequence){statements_in_block}? delimeter* 'end';
+
+procedure_declaration =
+  'procedure' delimeter+ identifier delimeter* formal_parameters? ';'
+  delimeter* block delimeter* identifier;
+
+{modula_2} =
+  'module' delimeter+ identifier delimeter* ';' delimeter*
+  (import delimeter* ';' delimeter*){imports}*
+  block delimeter*
+  identifier '.' delimeter*;

@@ -1,0 +1,192 @@
+module ssa_tests;
+
+procedure fn1() : integer;
+var k, a, b, c, m : integer;
+begin
+  k := 6;
+  a := 42;
+  b := a;
+  c := a + k;
+  a := c + 23;
+  m := a + 78;
+  return m;
+end fn1;
+
+procedure fn2() : integer;
+var a, b, c : integer;
+begin
+  a := 92;
+  b := 12;
+  while b = 5 do
+    a := 67;
+  end;
+  c := a + 7;
+  return c;
+end fn2;
+
+procedure fn3() : integer;
+var a, b, c : integer;
+begin
+  a := 92;
+  b := 12;
+  while b = 5 do
+    b := 67;
+  end;
+  c := a + 7;
+  return c;
+end fn3;
+
+procedure fn4() : integer;
+var a, b, c : integer;
+begin
+  a := 92;
+  b := 12;
+  while a = 5 do
+    b := b + 1;
+    b := b + 2;
+  end;
+  c := b + 7;
+  return c;
+end fn4;
+
+procedure fn5() : integer;
+var a, b, c : integer;
+begin
+  a := 92;
+  b := 12;
+  while b = 5 do
+    b := b + 1;
+    b := b + 2;
+  end;
+  c := b + 7;
+  return c;
+end fn5;
+
+procedure fn6() : integer;
+var a, b, c : integer;
+begin
+  a := 92;
+  b := 12;
+  if b = 5 then
+    b := b + 1;
+    b := b + 2;
+  end;
+  c := b + 7;
+  return c;
+end fn6;
+
+procedure fn7() : integer;
+var a, b, c : integer;
+begin
+  a := 92;
+  b := 12;
+  if b = 5 then
+    b := b + 1;
+    b := b + 2;
+  else
+    b := 4;
+  end;
+  c := b + 7;
+  return c;
+end fn7;
+
+procedure fn8(var b : integer) : integer;
+var b, c : integer;
+begin
+  if b # 5 then
+     while b # 8 do
+       b := b + 1;
+       b := b + 2;
+     end;
+  else
+    b := 9;
+  end;
+  c := b + 7;
+  return c;
+end fn8;
+
+
+type new_type = array[5] of integer;
+
+procedure fn9(a : new_type) : new_type;
+var c: integer;
+begin
+    c := 21;
+    if a[2] > 5 then
+      c := a[3 + 1];
+    else
+      a[1] := a[4];
+    end;
+    a[0] := c + a[3];
+    return a;
+end fn9;
+
+procedure fn10(a : integer) : integer;
+var c: integer;
+begin
+    c := 21;
+    if a > 5 then
+      c := a;
+    else
+      a := a;
+    end;
+    a := c + a;
+    return a;
+end fn10;
+
+
+procedure print_array(ls: new_type);
+var size, i: integer;
+begin
+ i := 0;
+ while i < 5 do
+   print_int(ls[i]);
+   i := i + 1;
+ end;
+end print_array;
+
+
+procedure main2 () : integer;
+var x: integer; ls : new_type; out : new_type;
+begin
+  ls := [4, 8, 6, 9, 3];
+  out := fn9(ls);
+  print_array(out);
+  return 0;
+end main2;
+
+
+procedure main22() : integer;
+var a : new_type;
+begin
+    a[4] := 43;
+    print_array(a);
+    return 0;
+end main22;
+
+type Point = record
+  x : integer;
+  y : new_type;
+end;
+
+procedure main() : integer;
+var a : Point; ls : new_type;
+begin
+    ls := [44,33,22,11, 0];
+    ls[2] := 23;
+    print_array(ls);
+    a.y := [5,6,7,8,9];
+    print_array(a.y);
+    a.x := 7;
+    a.y := [32,54,89,2,1];
+    print_array(a.y);
+    print_int(a.x);
+    a.x := 99;
+    print_int(a.x);
+    return 0;
+end main;
+
+
+
+end ssa_tests.
+

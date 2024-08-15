@@ -1,0 +1,18 @@
+module gcd;
+
+procedure gcd(a, b: integer) : integer;
+var t: integer;
+begin
+  if b = 0 then
+    return a;
+  end;
+  while b # 0 do
+    t := a mod b;
+    a := b;
+    b := t;
+  end;
+  return a;
+end gcd;
+
+end gcd.
+
