@@ -23,7 +23,7 @@ LLVM IR was used as a target language.
 - Compiler doesn't have any garbage collection
 - Implemented only arrays, structs, integers. 
 - Elimination of left recursion from grammar works only if left recursion appears in the first branch
-- Syntax error reports that are incomprehensible :) [This](https://github.com/n-shevko/modula2/blob/main/parser/ReportSyntaxErrors.fs) thing should be definitely rewritten 
+- Syntax error reports are incomprehensible :) [This](https://github.com/n-shevko/modula2/blob/main/parser/ReportSyntaxErrors.fs) thing should be definitely rewritten 
 
 ### Other
 Any modification of an array\structure copy entire agregate and then modify only needed subelement. 
