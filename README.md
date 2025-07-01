@@ -30,3 +30,5 @@ LLVM IR was used as a target language.
 ### Other
 Any modification of an array\structure copy entire agregate and then modify only needed subelement. 
 This is done on purpose for potential CPS conversion in the future.
+
+test
